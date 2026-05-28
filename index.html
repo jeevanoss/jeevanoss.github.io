@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digikada – PHP & eCommerce Expert, Alakode</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1410;
+    --ink-mid: #4a3f35;
+    --ink-light: #8a7a6a;
+    --cream: #f9f5ef;
+    --cream-dark: #ede8df;
+    --leaf: #3a6b35;
+    --leaf-light: #6aab5e;
+    --saffron: #d4720a;
+    --saffron-light: #f0a840;
+    --border: rgba(74,63,53,0.15);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1rem 2.5rem;
+    background: rgba(249,245,239,0.88);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem; font-weight: 700; letter-spacing: 0.02em;
+    color: var(--ink); text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.82rem; font-weight: 500; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--ink-mid); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--saffron); }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: grid; grid-template-columns: 1fr 1fr;
+    padding-top: 70px;
+    position: relative; overflow: hidden;
+  }
+  .hero-left {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 6rem 3rem 6rem 5rem;
+    position: relative; z-index: 2;
+  }
+  .hero-eyebrow {
+    font-size: 0.75rem; font-weight: 500; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--leaf);
+    margin-bottom: 1.2rem;
+    display: flex; align-items: center; gap: 0.6rem;
+  }
+  .hero-eyebrow::before {
+    content: ''; display: block; width: 28px; height: 1px; background: var(--leaf);
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.6rem, 5vw, 4.2rem);
+    line-height: 1.1; font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 0.4rem;
+  }
+  .hero h1 em {
+    font-style: italic; color: var(--saffron);
+  }
+  .hero-sub {
+    font-size: 1rem; color: var(--ink-mid); font-weight: 300;
+    margin: 1.2rem 0 2.5rem;
+    max-width: 380px;
+  }
+  .hero-tags {
+    display: flex; flex-wrap: wrap; gap: 0.5rem;
+    margin-bottom: 2.5rem;
+  }
+  .tag {
+    font-size: 0.75rem; font-weight: 500; letter-spacing: 0.04em;
+    padding: 5px 14px; border-radius: 100px;
+    border: 1px solid var(--border);
+    color: var(--ink-mid); background: var(--cream-dark);
+  }
+  .tag.accent { background: var(--leaf); color: white; border-color: var(--leaf); }
+  .hero-cta {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.7rem 1.8rem;
+    background: var(--ink); color: var(--cream);
+    font-size: 0.85rem; font-weight: 500; letter-spacing: 0.04em;
+    border-radius: 100px; text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .hero-cta:hover { background: var(--saffron); transform: translateY(-2px); }
+
+  .hero-right {
+    position: relative; overflow: hidden;
+    background: linear-gradient(135deg, #2d5228 0%, #1a3516 100%);
+  }
+  .hero-right-pattern {
+    position: absolute; inset: 0;
+    background-image: radial-gradient(circle at 30% 70%, rgba(106,171,94,0.25) 0%, transparent 55%),
+      radial-gradient(circle at 80% 20%, rgba(212,114,10,0.2) 0%, transparent 45%);
+  }
+  .hero-visual {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    padding: 3rem;
+    gap: 1.5rem;
+  }
+  .hero-stat {
+    text-align: center;
+    animation: floatUp 0.8s ease both;
+  }
+  .hero-stat:nth-child(1) { animation-delay: 0.2s; }
+  .hero-stat:nth-child(2) { animation-delay: 0.4s; }
+  .hero-stat:nth-child(3) { animation-delay: 0.6s; }
+  @keyframes floatUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem; font-weight: 700;
+    color: #f9f5ef; line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: rgba(249,245,239,0.55); margin-top: 4px;
+  }
+  .stat-divider {
+    width: 1px; height: 40px;
+    background: rgba(249,245,239,0.2);
+  }
+  .hero-location {
+    position: absolute; bottom: 2rem; left: 2rem;
+    display: flex; align-items: center; gap: 0.5rem;
+    font-size: 0.75rem; color: rgba(249,245,239,0.5);
+    letter-spacing: 0.06em; text-transform: uppercase;
+  }
+  .loc-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--saffron-light);
+    animation: pulse 2s ease infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.4); }
+  }
+
+  /* ─── SECTIONS ─── */
+  section { padding: 5rem 5rem; }
+  .section-label {
+    font-size: 0.72rem; font-weight: 500; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--saffron);
+    margin-bottom: 0.8rem;
+    display: flex; align-items: center; gap: 0.6rem;
+  }
+  .section-label::after {
+    content: ''; flex: 1; max-width: 40px; height: 1px; background: var(--saffron);
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    font-weight: 700; line-height: 1.2;
+    color: var(--ink); margin-bottom: 0.8rem;
+  }
+  .section-body {
+    font-size: 0.97rem; color: var(--ink-mid);
+    max-width: 600px; font-weight: 300;
+  }
+
+  /* ─── SKILLS ─── */
+  #skills { background: var(--ink); }
+  #skills .section-label { color: var(--saffron-light); }
+  #skills .section-label::after { background: var(--saffron-light); }
+  #skills .section-title { color: var(--cream); }
+  #skills .section-body { color: rgba(249,245,239,0.55); }
+
+  .skills-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem; margin-top: 3rem;
+  }
+  .skill-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px; padding: 1.8rem;
+    transition: background 0.2s, border-color 0.2s, transform 0.2s;
+  }
+  .skill-card:hover {
+    background: rgba(255,255,255,0.07);
+    border-color: rgba(212,114,10,0.4);
+    transform: translateY(-4px);
+  }
+  .skill-icon {
+    font-size: 1.6rem; margin-bottom: 1rem;
+    display: inline-block;
+  }
+  .skill-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem; color: var(--cream);
+    margin-bottom: 0.4rem; font-weight: 700;
+  }
+  .skill-years {
+    font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--saffron-light); margin-bottom: 0.8rem;
+  }
+  .skill-desc {
+    font-size: 0.85rem; color: rgba(249,245,239,0.45);
+    line-height: 1.6; font-weight: 300;
+  }
+  .skill-bar {
+    margin-top: 1.2rem;
+    height: 3px; background: rgba(255,255,255,0.08);
+    border-radius: 100px; overflow: hidden;
+  }
+  .skill-bar-fill {
+    height: 100%; border-radius: 100px;
+    background: linear-gradient(90deg, var(--saffron), var(--leaf-light));
+    transform-origin: left; animation: barGrow 1.2s ease both;
+  }
+  @keyframes barGrow {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+  }
+
+  /* ─── ECOMMERCE ─── */
+  .ec-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 3rem; margin-top: 3rem; align-items: start;
+  }
+  .ec-text .section-body { max-width: 100%; }
+  .ec-list {
+    list-style: none; margin-top: 1.5rem;
+    display: flex; flex-direction: column; gap: 0.8rem;
+  }
+  .ec-list li {
+    display: flex; align-items: flex-start; gap: 0.8rem;
+    font-size: 0.9rem; color: var(--ink-mid); font-weight: 300;
+  }
+  .ec-list li::before {
+    content: '→'; color: var(--leaf); font-weight: 500;
+    flex-shrink: 0; margin-top: 1px;
+  }
+  .ec-badge-wrap {
+    display: flex; flex-direction: column; gap: 1rem;
+  }
+  .ec-badge {
+    background: var(--cream-dark);
+    border: 1px solid var(--border);
+    border-radius: 12px; padding: 1.5rem;
+  }
+  .ec-badge-top {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 0.6rem;
+  }
+  .ec-badge-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem; font-weight: 700; color: var(--ink);
+  }
+  .ec-badge-exp {
+    font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--leaf); font-weight: 500;
+    background: rgba(58,107,53,0.1);
+    padding: 3px 10px; border-radius: 100px;
+  }
+  .ec-badge-desc {
+    font-size: 0.82rem; color: var(--ink-light); font-weight: 300;
+  }
+
+  /* ─── PASSIONS ─── */
+  #passions { background: var(--cream-dark); }
+  .passions-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem; margin-top: 3rem;
+  }
+  .passion-card {
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 16px; padding: 2rem 1.5rem;
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .passion-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 32px rgba(26,20,16,0.1);
+  }
+  .passion-emoji { font-size: 2.2rem; margin-bottom: 0.8rem; display: block; }
+  .passion-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem; font-weight: 700; color: var(--ink);
+    margin-bottom: 0.5rem;
+  }
+  .passion-desc {
+    font-size: 0.82rem; color: var(--ink-light);
+    font-weight: 300; line-height: 1.6;
+  }
+
+  /* ─── VILLAGE ─── */
+  .village-inner {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 5rem; align-items: center;
+  }
+  .village-quote {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem; font-style: italic;
+    color: var(--leaf); line-height: 1.5;
+    border-left: 3px solid var(--leaf);
+    padding-left: 1.5rem; margin: 2rem 0;
+  }
+  .village-detail {
+    font-size: 0.88rem; color: var(--ink-light); font-weight: 300;
+  }
+  .village-map-box {
+    background: var(--leaf);
+    border-radius: 16px; padding: 3rem 2rem;
+    text-align: center; color: white;
+    position: relative; overflow: hidden;
+  }
+  .village-map-box::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(circle at 60% 40%, rgba(255,255,255,0.1) 0%, transparent 60%);
+  }
+  .village-map-emoji { font-size: 3rem; display: block; margin-bottom: 1rem; }
+  .village-map-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem; font-weight: 700; margin-bottom: 0.3rem;
+  }
+  .village-map-district {
+    font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase;
+    opacity: 0.65;
+  }
+  .village-map-facts {
+    margin-top: 1.5rem; display: flex; justify-content: center; gap: 2rem;
+  }
+  .v-fact { text-align: center; }
+  .v-fact-num { font-size: 1.4rem; font-weight: 700; font-family: 'Playfair Display', serif; }
+  .v-fact-lbl { font-size: 0.7rem; opacity: 0.55; letter-spacing: 0.08em; text-transform: uppercase; margin-top: 2px; }
+
+  /* ─── INTEGRAW ─── */
+  #integraw {
+    background: #042C53;
+  }
+  #integraw .section-label { color: #6ab8f5; }
+  #integraw .section-label::after { background: #6ab8f5; }
+  #integraw .section-title { color: #f0f6ff; }
+  #integraw .section-body { color: rgba(230,241,251,0.6); }
+  .iw-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 4rem; margin-top: 3rem; align-items: center;
+  }
+  .iw-brand {
+    background: rgba(24,95,165,0.25);
+    border: 1px solid rgba(24,95,165,0.4);
+    border-radius: 16px; padding: 2.5rem;
+    text-align: center;
+  }
+  .iw-logo-box {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 72px; height: 72px;
+    background: #185FA5; border-radius: 18px;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem; font-weight: 700; color: white;
+    margin: 0 auto 1.2rem; letter-spacing: -0.02em;
+  }
+  .iw-brand-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem; font-weight: 700;
+    color: #185FA5; margin-bottom: 0.2rem;
+    letter-spacing: -0.01em;
+  }
+  .iw-brand-tagline {
+    font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(230,241,251,0.45); margin-bottom: 1.5rem;
+  }
+  .iw-palette {
+    display: flex; justify-content: center; gap: 0.5rem; margin-bottom: 1.5rem;
+  }
+  .iw-swatch {
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+  }
+  .iw-swatch-dot {
+    width: 32px; height: 32px; border-radius: 8px;
+  }
+  .iw-swatch-hex {
+    font-size: 0.6rem; color: rgba(230,241,251,0.35); letter-spacing: 0.04em;
+  }
+  .iw-visit {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    margin-top: 0.5rem;
+    font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: #185FA5; text-decoration: none;
+    background: rgba(24,95,165,0.15);
+    border: 1px solid rgba(24,95,165,0.3);
+    padding: 0.5rem 1.2rem; border-radius: 100px;
+    transition: background 0.2s;
+  }
+  .iw-visit:hover { background: rgba(24,95,165,0.3); }
+  .iw-services {
+    display: flex; flex-direction: column; gap: 1rem;
+  }
+  .iw-service {
+    display: flex; align-items: flex-start; gap: 1rem;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px; padding: 1.2rem 1.4rem;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .iw-service:hover {
+    background: rgba(24,95,165,0.15);
+    border-color: rgba(24,95,165,0.35);
+  }
+  .iw-service-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 1px; }
+  .iw-service-name {
+    font-size: 0.92rem; font-weight: 500; color: #e6f1fb;
+    margin-bottom: 0.2rem;
+  }
+  .iw-service-desc {
+    font-size: 0.78rem; color: rgba(230,241,251,0.4);
+    font-weight: 300; line-height: 1.5;
+  }
+
+
+  #digikada { background: var(--ink); }
+  #digikada .section-label { color: var(--saffron-light); }
+  #digikada .section-label::after { background: var(--saffron-light); }
+  #digikada .section-title { color: var(--cream); }
+  #digikada .section-body { color: rgba(249,245,239,0.55); }
+  .dk-link {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    margin-top: 2rem;
+    font-size: 0.9rem; color: var(--saffron-light);
+    text-decoration: none; border-bottom: 1px solid rgba(240,168,64,0.3);
+    padding-bottom: 2px; transition: border-color 0.2s;
+  }
+  .dk-link:hover { border-color: var(--saffron-light); }
+
+  /* ─── CONTACT ─── */
+  #contact { background: var(--cream-dark); }
+  .contact-inner {
+    display: flex; gap: 4rem; align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  .contact-text { flex: 1; min-width: 280px; }
+  .contact-links { display: flex; flex-direction: column; gap: 1rem; }
+  .contact-link {
+    display: flex; align-items: center; gap: 1rem;
+    padding: 1rem 1.4rem;
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 10px; text-decoration: none;
+    transition: border-color 0.2s, transform 0.15s;
+    color: var(--ink);
+  }
+  .contact-link:hover {
+    border-color: var(--saffron);
+    transform: translateX(4px);
+  }
+  .contact-link-icon { font-size: 1.2rem; }
+  .contact-link-text { font-size: 0.88rem; font-weight: 500; }
+  .contact-link-sub { font-size: 0.75rem; color: var(--ink-light); font-weight: 300; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--ink); color: rgba(249,245,239,0.35);
+    text-align: center; padding: 1.5rem;
+    font-size: 0.78rem; letter-spacing: 0.04em;
+  }
+  footer a { color: var(--saffron-light); text-decoration: none; }
+
+  /* ─── ANIMATIONS ─── */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    nav { padding: 0.8rem 1.2rem; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-left { padding: 5rem 1.5rem 3rem; }
+    .hero-right { min-height: 260px; }
+    section { padding: 3.5rem 1.5rem; }
+    .ec-grid, .village-inner, .iw-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .contact-inner { flex-direction: column; gap: 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#">Digikada</a>
+  <ul class="nav-links">
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#ecommerce">eCommerce</a></li>
+    <li><a href="#integraw">Integraw</a></li>
+    <li><a href="#passions">Passions</a></li>
+    <li><a href="#village">Village</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Available for projects</div>
+    <h1>PHP &amp; eCommerce<br><em>Expert</em><br>from Kerala</h1>
+    <p class="hero-sub">18+ years crafting robust web solutions — from PHP/MySQL backends to full Prestashop ecommerce ecosystems.</p>
+    <div class="hero-tags">
+      <span class="tag accent">PHP</span>
+      <span class="tag accent">MySQL</span>
+      <span class="tag accent">Prestashop</span>
+      <span class="tag">eCommerce</span>
+      <span class="tag">Violin • Carnatic</span>
+      <span class="tag">Alakode, Kerala</span>
+    </div>
+    <a href="#contact" class="hero-cta">Get in touch →</a>
+  </div>
+  <div class="hero-right">
+    <div class="hero-right-pattern"></div>
+    <div class="hero-visual">
+      <div class="hero-stat">
+        <div class="stat-num">18+</div>
+        <div class="stat-label">Years PHP &amp; MySQL</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="hero-stat">
+        <div class="stat-num">12+</div>
+        <div class="stat-label">Years Prestashop</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="hero-stat">
+        <div class="stat-num">∞</div>
+        <div class="stat-label">Passion for Code</div>
+      </div>
+    </div>
+    <div class="hero-location">
+      <div class="loc-dot"></div>
+      Alakode, Kannur, Kerala
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="reveal">
+    <div class="section-label">Core expertise</div>
+    <h2 class="section-title">Built on solid foundations</h2>
+    <p class="section-body">Years of hands-on development across the full stack — from database architecture to front-end delivery.</p>
+  </div>
+  <div class="skills-grid reveal">
+    <div class="skill-card">
+      <span class="skill-icon">🐘</span>
+      <div class="skill-name">PHP Development</div>
+      <div class="skill-years">18+ years experience</div>
+      <div class="skill-desc">Server-side scripting, REST APIs, custom frameworks, MVC architecture and clean code practices.</div>
+      <div class="skill-bar"><div class="skill-bar-fill" style="width:95%"></div></div>
+    </div>
+    <div class="skill-card">
+      <span class="skill-icon">🗄️</span>
+      <div class="skill-name">MySQL / Databases</div>
+      <div class="skill-years">18+ years experience</div>
+      <div class="skill-desc">Complex queries, schema design, performance tuning, stored procedures and database optimization.</div>
+      <div class="skill-bar"><div class="skill-bar-fill" style="width:92%"></div></div>
+    </div>
+    <div class="skill-card">
+      <span class="skill-icon">🛒</span>
+      <div class="skill-name">Prestashop</div>
+      <div class="skill-years">12+ years experience</div>
+      <div class="skill-desc">Custom modules, theme development, migrations, payment gateways and full-store builds.</div>
+      <div class="skill-bar"><div class="skill-bar-fill" style="width:98%"></div></div>
+    </div>
+    <div class="skill-card">
+      <span class="skill-icon">🌐</span>
+      <div class="skill-name">eCommerce Strategy</div>
+      <div class="skill-years">12+ years experience</div>
+      <div class="skill-desc">Conversion optimisation, product catalog architecture, SEO for shops and B2C/B2B solutions.</div>
+      <div class="skill-bar"><div class="skill-bar-fill" style="width:90%"></div></div>
+    </div>
+    <div class="skill-card">
+      <span class="skill-icon">▲</span>
+      <div class="skill-name">Next.js · NestJS</div>
+      <div class="skill-years">Modern stack · digikada.com</div>
+      <div class="skill-desc">Full-stack JavaScript — React/Next.js frontend with a NestJS API layer and PostgreSQL database.</div>
+      <div class="skill-bar"><div class="skill-bar-fill" style="width:80%"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ECOMMERCE -->
+<section id="ecommerce">
+  <div class="ec-grid reveal">
+    <div class="ec-text">
+      <div class="section-label">eCommerce specialist</div>
+      <h2 class="section-title">Prestashop &amp; beyond</h2>
+      <p class="section-body">Over a decade building and optimising online stores — from small boutiques to high-traffic ecommerce platforms.</p>
+      <ul class="ec-list">
+        <li>Custom module development for Prestashop 1.x and 8.x</li>
+        <li>Payment gateway integrations (Razorpay, PayPal, Stripe and local gateways)</li>
+        <li>Store migration, data import/export and multi-language setups</li>
+        <li>Performance optimisation for high product-count catalogues</li>
+        <li>WordPress theme &amp; plugin development, WooCommerce builds</li>
+        <li>Third-party API integrations — shipping, ERP, inventory</li>
+      </ul>
+    </div>
+    <div class="ec-badge-wrap">
+      <div class="ec-badge">
+        <div class="ec-badge-top">
+          <div class="ec-badge-name">🛒 Prestashop</div>
+          <div class="ec-badge-exp">12+ yrs</div>
+        </div>
+        <div class="ec-badge-desc">Expert-level module and theme development. Complex customisations, hooks, overrides and multistore.</div>
+      </div>
+      <div class="ec-badge">
+        <div class="ec-badge-top">
+          <div class="ec-badge-name">🌐 WordPress</div>
+          <div class="ec-badge-exp">Specialist</div>
+        </div>
+        <div class="ec-badge-desc">Custom themes, plugins, WooCommerce builds and high-performance WordPress deployments.</div>
+      </div>
+      <div class="ec-badge" style="border-color: rgba(24,95,165,0.3); background: rgba(24,95,165,0.04);">
+        <div class="ec-badge-top">
+          <div class="ec-badge-name" style="color:#185FA5;">⬡ integraw.in</div>
+          <div class="ec-badge-exp" style="color:#185FA5; background:rgba(24,95,165,0.1);">Live</div>
+        </div>
+        <div class="ec-badge-desc">My dedicated eCommerce &amp; WordPress agency — Prestashop · WordPress · Web.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INTEGRAW -->
+<section id="integraw">
+  <div class="reveal">
+    <div class="section-label">My agency brand</div>
+    <h2 class="section-title">integraw.in</h2>
+    <p class="section-body">My dedicated eCommerce and web agency — where Prestashop expertise, WordPress craftsmanship, and custom PHP development come together for clients.</p>
+  </div>
+  <div class="iw-grid reveal">
+    <div class="iw-brand">
+      <div class="iw-logo-box">IW</div>
+      <div class="iw-brand-name">integraw</div>
+      <div class="iw-brand-tagline">E-Commerce · PrestaShop · Web</div>
+      <div class="iw-palette">
+        <div class="iw-swatch">
+          <div class="iw-swatch-dot" style="background:#185FA5;"></div>
+          <div class="iw-swatch-hex">#185FA5</div>
+        </div>
+        <div class="iw-swatch">
+          <div class="iw-swatch-dot" style="background:#042C53;"></div>
+          <div class="iw-swatch-hex">#042C53</div>
+        </div>
+        <div class="iw-swatch">
+          <div class="iw-swatch-dot" style="background:#1D9E75;"></div>
+          <div class="iw-swatch-hex">#1D9E75</div>
+        </div>
+        <div class="iw-swatch">
+          <div class="iw-swatch-dot" style="background:#E6F1FB;"></div>
+          <div class="iw-swatch-hex">#E6F1FB</div>
+        </div>
+      </div>
+      <a href="https://integraw.in" target="_blank" class="iw-visit">Visit integraw.in ↗</a>
+    </div>
+    <div class="iw-services">
+      <div class="iw-service">
+        <span class="iw-service-icon">🛒</span>
+        <div>
+          <div class="iw-service-name">Prestashop Development</div>
+          <div class="iw-service-desc">Custom modules, themes, migrations, payment gateways and full store builds for Prestashop 1.x–8.x.</div>
+        </div>
+      </div>
+      <div class="iw-service">
+        <span class="iw-service-icon">🌐</span>
+        <div>
+          <div class="iw-service-name">WordPress &amp; WooCommerce</div>
+          <div class="iw-service-desc">Bespoke themes, plugin development, WooCommerce customisation and performance optimisation.</div>
+        </div>
+      </div>
+      <div class="iw-service">
+        <span class="iw-service-icon">🐘</span>
+        <div>
+          <div class="iw-service-name">PHP / MySQL Backend</div>
+          <div class="iw-service-desc">Custom web applications, REST APIs, ERP integrations and database architecture using PHP &amp; MySQL.</div>
+        </div>
+      </div>
+      <div class="iw-service">
+        <span class="iw-service-icon">⚡</span>
+        <div>
+          <div class="iw-service-name">eCommerce Consulting</div>
+          <div class="iw-service-desc">Platform selection, store audits, conversion optimisation and go-to-market strategy for online retail.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PASSIONS -->
+<section id="passions">
+  <div class="reveal" style="text-align:center; margin-bottom: 1rem;">
+    <div class="section-label" style="justify-content:center;">Beyond the screen</div>
+    <h2 class="section-title">What makes me, me</h2>
+    <p class="section-body" style="margin: 0 auto;">Life is richer than code — music, nature, and good food keep me grounded and inspired.</p>
+  </div>
+  <div class="passions-grid reveal">
+    <div class="passion-card">
+      <span class="passion-emoji">🎻</span>
+      <div class="passion-title">Carnatic Violin</div>
+      <div class="passion-desc">Exploring the deep classical traditions of South Indian music through the violin — a lifelong journey of raga and rhythm.</div>
+    </div>
+    <div class="passion-card">
+      <span class="passion-emoji">🌿</span>
+      <div class="passion-title">Nature &amp; Village Life</div>
+      <div class="passion-desc">Rooted in the lush greenery of Alakode — rubber trees, coconut palms, rivers, and morning birdsong.</div>
+    </div>
+    <div class="passion-card">
+      <span class="passion-emoji">🍳</span>
+      <div class="passion-title">Cooking</div>
+      <div class="passion-desc">Finding joy in Kerala's rich culinary tradition — fresh ingredients, slow cooking, and feeding people well.</div>
+    </div>
+    <div class="passion-card">
+      <span class="passion-emoji">💻</span>
+      <div class="passion-title">Open Source &amp; Learning</div>
+      <div class="passion-desc">Always curious — following new PHP frameworks, contributing to community projects, and never stop building.</div>
+    </div>
+  </div>
+</section>
+
+<!-- VILLAGE -->
+<section id="village">
+  <div class="village-inner reveal">
+    <div>
+      <div class="section-label">Home base</div>
+      <h2 class="section-title">Alakode, Kannur</h2>
+      <blockquote class="village-quote">"Where rubber trees and rivers shape the morning, and code fills the night."</blockquote>
+      <p class="section-body">Alakode is a quiet village in Kannur district, Kerala — surrounded by rubber plantations, lush hills, and river valleys. Growing up and living here keeps me connected to something real, beyond the digital world.</p>
+      <p class="village-detail" style="margin-top: 1rem;">My son Aswin also calls Alakode home — he built his own village website at age 4th standard, already following in curious footsteps. <a href="https://aswin-aaj.github.io/my-village-website/index.html" target="_blank" style="color: var(--leaf);">Visit Aswin's site →</a></p>
+    </div>
+    <div class="village-map-box">
+      <span class="village-map-emoji">🌴</span>
+      <div class="village-map-name">Alakode</div>
+      <div class="village-map-district">Kannur District · Kerala · India</div>
+      <div class="village-map-facts">
+        <div class="v-fact">
+          <div class="v-fact-num">🌧️</div>
+          <div class="v-fact-lbl">Monsoon</div>
+        </div>
+        <div class="v-fact">
+          <div class="v-fact-num">🌿</div>
+          <div class="v-fact-lbl">Rubber</div>
+        </div>
+        <div class="v-fact">
+          <div class="v-fact-num">🎵</div>
+          <div class="v-fact-lbl">Music</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIGIKADA -->
+<section id="digikada">
+  <div class="reveal">
+    <div class="section-label">My project</div>
+    <h2 class="section-title">digikada.com</h2>
+    <p class="section-body">Digikada is my own digital venture — built from scratch on a modern stack: <strong style="color:var(--saffron-light)">Next.js</strong> on the frontend, <strong style="color:var(--saffron-light)">NestJS</strong> as the backend API, and <strong style="color:var(--saffron-light)">PostgreSQL</strong> as the database. Proof that 18 years of PHP expertise translates beautifully into the modern JavaScript ecosystem.</p>
+    <a href="http://digikada.com" target="_blank" class="dk-link">Visit digikada.com ↗</a>
+    <div style="display:flex; gap:1rem; flex-wrap:wrap; margin-top:2.5rem;">
+      <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:10px; padding:1rem 1.5rem; text-align:center;">
+        <div style="font-size:1.5rem; margin-bottom:0.4rem;">▲</div>
+        <div style="font-size:0.78rem; font-weight:500; color:var(--cream); letter-spacing:0.06em;">Next.js</div>
+        <div style="font-size:0.7rem; color:rgba(249,245,239,0.35); margin-top:2px;">Frontend</div>
+      </div>
+      <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:10px; padding:1rem 1.5rem; text-align:center;">
+        <div style="font-size:1.5rem; margin-bottom:0.4rem;">🐦</div>
+        <div style="font-size:0.78rem; font-weight:500; color:var(--cream); letter-spacing:0.06em;">NestJS</div>
+        <div style="font-size:0.7rem; color:rgba(249,245,239,0.35); margin-top:2px;">Backend API</div>
+      </div>
+      <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:10px; padding:1rem 1.5rem; text-align:center;">
+        <div style="font-size:1.5rem; margin-bottom:0.4rem;">🐘</div>
+        <div style="font-size:0.78rem; font-weight:500; color:var(--cream); letter-spacing:0.06em;">PostgreSQL</div>
+        <div style="font-size:0.7rem; color:rgba(249,245,239,0.35); margin-top:2px;">Database</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner reveal">
+    <div class="contact-text">
+      <div class="section-label">Get in touch</div>
+      <h2 class="section-title">Let's build something</h2>
+      <p class="section-body">Available for Prestashop projects, PHP development, ecommerce consulting, and custom web solutions. Based in Alakode, Kerala — working globally.</p>
+    </div>
+    <div class="contact-links">
+      <a href="http://digikada.com" target="_blank" class="contact-link">
+        <span class="contact-link-icon">🌐</span>
+        <div>
+          <div class="contact-link-text">digikada.com</div>
+          <div class="contact-link-sub">Modern stack project · Next.js / NestJS</div>
+        </div>
+      </a>
+      <a href="https://integraw.in" target="_blank" class="contact-link">
+        <span class="contact-link-icon">🛒</span>
+        <div>
+          <div class="contact-link-text">integraw.in</div>
+          <div class="contact-link-sub">eCommerce &amp; WordPress agency</div>
+        </div>
+      </a>
+      <a href="https://github.com/" target="_blank" class="contact-link">
+        <span class="contact-link-icon">🐙</span>
+        <div>
+          <div class="contact-link-text">GitHub</div>
+          <div class="contact-link-sub">Code repositories &amp; projects</div>
+        </div>
+      </a>
+      <a href="mailto:hello@digikada.com" class="contact-link">
+        <span class="contact-link-icon">✉️</span>
+        <div>
+          <div class="contact-link-text">Email</div>
+          <div class="contact-link-sub">hello@digikada.com</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Built with care · Alakode, Kerala · <a href="http://digikada.com">digikada.com</a> · <a href="https://integraw.in">integraw.in</a></p>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => io.observe(el));
+</script>
+</body>
+</html>
