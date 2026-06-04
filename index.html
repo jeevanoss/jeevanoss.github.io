@@ -113,6 +113,7 @@
   .hero-right {
     position: relative; overflow: hidden;
     background: linear-gradient(135deg, #2d5228 0%, #1a3516 100%);
+    min-height: 320px;
   }
   .hero-right-pattern {
     position: absolute; inset: 0;
@@ -495,15 +496,20 @@
   @media (max-width: 768px) {
     nav { padding: 0.8rem 1.2rem; }
     .nav-links { display: none; }
-    .hero { grid-template-columns: 1fr; }
+    .hero {
+      grid-template-columns: 1fr;
+      min-height: auto;
+      overflow: visible;
+    }
     .hero-left { padding: 5rem 1.5rem 3rem; }
-    .hero-right { min-height: 260px; }
+    .hero-right {
+      min-height: 280px;
+      width: 100%;
+    }
     section { padding: 3.5rem 1.5rem; }
     .ec-grid, .village-inner, .iw-grid { grid-template-columns: 1fr; gap: 2rem; }
     .contact-inner { flex-direction: column; gap: 2rem; }
-    /* Hide the brand card on mobile — show only the content side */
     .iw-brand { display: none; }
-    /* Fix text contrast in integraw section on mobile */
     #integraw .section-title { color: #e6f1fb; }
     #integraw .section-body { color: rgba(230,241,251,0.65); }
   }
