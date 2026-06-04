@@ -501,6 +501,11 @@
     section { padding: 3.5rem 1.5rem; }
     .ec-grid, .village-inner, .iw-grid { grid-template-columns: 1fr; gap: 2rem; }
     .contact-inner { flex-direction: column; gap: 2rem; }
+    /* Hide the brand card on mobile — show only the content side */
+    .iw-brand { display: none; }
+    /* Fix text contrast in integraw section on mobile */
+    #integraw .section-title { color: #e6f1fb; }
+    #integraw .section-body { color: rgba(230,241,251,0.65); }
   }
 </style>
 </head>
@@ -673,7 +678,7 @@
           <div class="iw-swatch-hex">#1D9E75</div>
         </div>
         <div class="iw-swatch">
-          <div class="iw-swatch-dot" style="background:#E6F1FB;"></div>
+          <div class="iw-swatch-dot" style="background:#E6F1FB; border:1px solid rgba(255,255,255,0.2);"></div>
           <div class="iw-swatch-hex">#E6F1FB</div>
         </div>
       </div>
@@ -687,9 +692,9 @@
       </div>
       <div style="display:flex; gap:1rem; flex-wrap:wrap;">
         <a href="https://integraw.in" target="_blank" style="display:inline-flex; align-items:center; gap:0.4rem; padding:0.75rem 1.6rem; background:#1D9E75; color:white; font-size:0.85rem; font-weight:500; border-radius:8px; text-decoration:none; transition:opacity 0.2s;">Get a free quote →</a>
-        <a href="https://integraw.in/portfolio" target="_blank" style="display:inline-flex; align-items:center; gap:0.4rem; padding:0.75rem 1.6rem; background:transparent; color:#e6f1fb; font-size:0.85rem; font-weight:500; border-radius:8px; text-decoration:none; border:1px solid rgba(230,241,251,0.2); transition:border-color 0.2s;">View our work</a>
+        <a href="https://integraw.in/portfolio" target="_blank" style="display:inline-flex; align-items:center; gap:0.4rem; padding:0.75rem 1.6rem; background:transparent; color:#e6f1fb; font-size:0.85rem; font-weight:500; border-radius:8px; text-decoration:none; border:1.5px solid rgba(230,241,251,0.35); transition:border-color 0.2s;">View our work</a>
       </div>
-      <div style="margin-top:2rem; display:grid; grid-template-columns:1fr 1fr; gap:0.8rem;">
+      <div style="margin-top:2rem; display:grid; grid-template-columns:repeat(auto-fit, minmax(140px,1fr)); gap:0.8rem;">
         <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.07); border-radius:10px; padding:1rem;">
           <div style="font-size:1rem; margin-bottom:0.4rem;">🛒</div>
           <div style="font-size:0.82rem; font-weight:500; color:#e6f1fb;">PrestaShop</div>
